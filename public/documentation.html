@@ -11,5 +11,98 @@
     <p>    The Movie API will allow the user to different information from movies, such as genre and director, 
         and create lists of their favorites. The will also be able t sign up and update their personal information.
     </p>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Return a list of ALL movies to the user</li>
+      <li>Return data (description, genre, director, image URL, whether it/s featured or not) about a single movie by title to the user</li>
+      <li>Return data about a genre (description) by name/title (e.g., “Drama”)</li>
+      <li>Return data about a director (bio, birth year, death year) by name</li>
+      <li>Allow new users to register</li>
+      <li>Allow users to update their user info (username)</li>
+      <li>Allow users to add a movie to their list of favorites</li>
+      <li>Allow users to remove a movie from their list of favorites</li>
+      <li>Allow existing users to deregister</li>
+    </ul>
+
+    <h2>API Endpoints</h2>
+
+    <table>
+      <thead>
+         <tr>
+             <th>Goal</th>
+             <th>URL</th>
+             <th>HTTP Method</th>
+             
+             <th>Response body data format</th>
+         </tr>
+      </thead>
+ 
+      <tbody>
+         <tr>
+             <td>Get a list of all movies</td>
+             <td>/movies</td>
+             <td>GET</td>
+             <td>A JSON object holding data about all the movies</td>
+         </tr>
+ 
+         <tr>
+             <td>Get a single movie by title</td>
+             <td>/movies/:title</td>
+             <td>GET</td>             
+             <td>A JSON object holding data about a single movie</td>
+         </tr>
+ 
+         <tr>
+             <td>Get Genre by Name</td>
+             <td>/movies/genre/:genreName</td>
+             <td>GET</td>             
+             <td>A JSON object holding data about the genre of a movie</td>
+         </tr>
+ 
+         <tr>
+             <td>Get director data by name</td>
+             <td>/movies/director/:directorName</td>
+             <td>GET</td>             
+             <td>A JSON object holding data about the data of a director</td>
+         </tr>
+ 
+         <tr>
+             <td>Allow new users to Register</td>
+             <td>/users</td>
+             <td>POST</td>             
+             <td>A JSON object holding data about the user that was added</td>
+         </tr>
+ 
+         <tr>
+             <td>Allow new users update their user info</td>
+             <td>/users/:id</td>
+             <td>PUT</td>             
+             <td>A JSON object holding data about the updated information</td>
+         </tr>
+ 
+         <tr>
+             <td>Adds movie to favorite list</td>
+             <td>/users/:id/:movieTitle</td>
+             <td>POST</td>             
+             <td>A text message indicating whether the Movie was added</td>
+         </tr>
+ 
+         <tr>
+             <td>Delete movie from favorite list</td>
+             <td>/users/:id/:movieTitle</td>
+             <td>DELETE</td>             
+             <td>A text message indicating whether the Movie was removed</td>
+         </tr>
+ 
+         <tr>
+             <td>Allow existing users to deregister</td>
+             <td>/users/:id</td>
+             <td>DELETE</td>             
+             <td>A text message indicating whether the User has deregistered</td>
+         </tr>
+      </tbody>
+     </table>
+
   </body>
 </html>
