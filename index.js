@@ -1,3 +1,11 @@
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
 const express = require('express'),
   bodyParser = require('body-parser'),
   uuid = require('uuid');
@@ -5,6 +13,7 @@ const express = require('express'),
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let users = [
   {
@@ -27,52 +36,52 @@ let users = [
 let topMovies = [
     {
       Title: 'Harry Potter and the Sorcerer\'s Stone',
-      Description: '',
+      Description: 'An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.',
       Director: {
         Name: 'Chris Columbus',
-        Bio: '',
+        Bio: 'Chris Joseph Columbus is an American filmmaker. ',
         birthYear: '1958',
         deathYear: ''
       },
       Genre: {
         Type: 'Adventure',
-        Description: ''
+        Description: 'The adventure genre consists of stories where the protagonist goes on an epic journey, either personally or geographically'
       },
-      ImageURL: ''
+      ImageURL: 'harry-potter-ss.png'
     },
     {
       Title: 'The Lord of the Rings',
-      Description: '',
+      Description: 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.',
       Director: {
         Name: 'Peter Jackson',
-        Bio: '',
-        birthYear: '',
+        Bio: 'Sir Peter Robert Jackson ONZ KNZM is a New Zealand film director, screenwriter and producer',
+        birthYear: '1961',
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Fantasy',
+        Description: 'Fantasy is a genre of speculative fiction involving magical elements, typically set in a fictional universe and sometimes inspired by mythology and folklore'
       },
-      ImageURL: ''
+      ImageURL: 'lort.png'
     },
     {
       Title: 'Twilight',
-      Description: '',
+      Description: 'When Bella Swan moves to a small town in the Pacific Northwest, she falls in love with Edward Cullen, a mysterious classmate who reveals himself to be a vampire.',
       Director: {
         Name: 'Catherine Hardwicke',
         Bio: '',
-        birthYear: '',
+        birthYear: '1955',
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Romance',
+        Description: 'a type of genre fiction which places its primary focus on the relationship and romantic love between two people, and usually has an "emotionally satisfying and optimistic ending.'
       },
-      ImageURL: ''
+      ImageURL: 'twilight.png'
     },
     {
-      Title: 'Fantastic Beasts',
-      Description: '',
+      Title: 'Fantastic Beasts and Where to Find Them',
+      Description: 'The adventures of writer Newt Scamander in New York\'s secret community of witches and wizards seventy.',
       Director: {
         Name: 'David Yates',
         Bio: '',
@@ -80,14 +89,14 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Fantasy',
+        Description: 'Fantasy is a genre of speculative fiction involving magical elements, typically set in a fictional universe and sometimes inspired by mythology and folklore'
       },
-      ImageURL: ''
+      ImageURL: 'fantastic-beasts-awtft.png'
     },
     {
       Title: 'Cars',
-      Description: '',
+      Description: 'On the way to the biggest race of his life, a hotshot rookie race car gets stranded in a rundown town, and learns that winning isn\'t everything in life.',
       Director: {
         Name: 'John Lasseter',
         Bio: '',
@@ -95,14 +104,14 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Comedy',
+        Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.'
       },
-      ImageURL: ''
+      ImageURL: 'cars.png'
     },
     {
       Title: 'The Incredibles',
-      Description: '',
+      Description: 'While trying to lead a quiet suburban life, a family of undercover superheroes are forced into action to save the world.',
       Director: {
         Name: 'Brad Bird',
         Bio: '',
@@ -110,14 +119,14 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Adventure',
+        Description: 'The adventure genre consists of stories where the protagonist goes on an epic journey, either personally or geographically'
       },
-      ImageURL: ''
+      ImageURL: 'the-incredibles.png'
     },
     {
       Title: 'Toy Story',
-      Description: '',
+      Description: 'A cowboy doll is profoundly threatened and jealous when a new spaceman action figure supplants him as top toy in a boy\'s bedroom.',
       Director: {
         Name: 'John Lasseter',
         Bio: '',
@@ -125,14 +134,14 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Adventure',
+        Description: 'The adventure genre consists of stories where the protagonist goes on an epic journey, either personally or geographically'
       },
-      ImageURL: ''
+      ImageURL: 'toy-story.png'
     },
     {
       Title: 'Legally Blonde',
-      Description: '',
+      Description: 'Legally Blonde finds Reese Witherspoon in one of her breakthrough roles as sorority queen Elle Woods who is dumped by her preppy boyfriend Matthew Davis.',
       Director: {
         Name: 'Robert Luketic',
         Bio: '',
@@ -140,14 +149,14 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Comedy',
+        Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.'
       },
-      ImageURL: ''
+      ImageURL: 'legally-blonde.png'
     },
     {
       Title: 'Mean Girls',
-      Description: '',
+      Description: 'Cady Heron is a hit with The Plastics, the A-list girl clique at her new school, until she makes the mistake of falling for Aaron Samuels, the ex-boyfriend ',
       Director: {
         Name: 'Mark Waters',
         Bio: '',
@@ -155,14 +164,14 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Comedy',
+        Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.'
       },
-      ImageURL: ''
+      ImageURL: 'mean-girls.png'
     },
     {
       Title: 'Scream 2',
-      Description: '',
+      Description: 'Two years after the first series of murders, as Sidney acclimates to college life, someone donning the Ghostface costume begins a new string of killings.',
       Director: {
         Name: 'Wes Craven',
         Bio: '',
@@ -170,138 +179,216 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: '',
-        Description: ''
+        Type: 'Horror',
+        Description: 'Horror is a genre of fiction which is intended to frighten, scare, or disgust'
       },
-      ImageURL: ''
+      ImageURL: 'scream2.png'
     }
   ];
 
-// CREATE
-app.put('/users', (req, res) => {
-  const newUser = req.body;
-
-  if (newUser.name) {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).json(newUser)
-  } else {
-    res.status(400).send('users need names')
-  }
-})
+app.use(express.static("public"));
 
 
-// UPDATE
-app.post('/users/:id', (req, res) => {
-  const {id} = req.params;
-  const updatedUser = req.body;
-
-  let user = users.find( user => user.id == id);
-
-  if (user) {
-    user.name = updatedUser.name;
-    res.status(200).json(user);
-  } else {
-    res.status(400).send('no such user')
-  }
-
-})
+// default text response
+app.get('/', (req, res) => {
+  res.send("Welcome to MyFlix!");
+});
 
 
-// CREATE
-app.post('/users/:id/:movieTitle', (req, res) => {
-  const {id, movieTitle} = req.params;
-
-  let user = users.find( user => user.id == id);
-
-  if (user) {
-    user.favoriteMovies.push(movieTitle);
-    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
-  } else {
-    res.status(400).send('no such user')
-  }
-
-})
-
-
-// DELETE
-app.delete('/users/:id/:movieTitle', (req, res) => {
-  const {id, movieTitle} = req.params;
-
-  let user = users.find( user => user.id == id);
-
-  if (user) {
-    user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
-    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);
-  } else {
-    res.status(400).send('no such user')
-  }
-
-})
-
-
-// DELETE
-app.delete('/users/:id', (req, res) => {
-  const {id} = req.params;
-
-  let user = users.find( user => user.id == id);
-
-  if (user) {
-    users = users.filter( user => user.id != id);
-    res.status(200).send(`user ${id} has been deleted`);
-  } else {
-    res.status(400).send('no such user')
-  }
-
-})
+// CREATE (add a user)
+/* We’ll expect JSON in this format
+{
+  ID: Integer,
+  Username: String,
+  Password: String,
+  Email: String,
+  Birthday: Date
+}*/
+app.post('/users', (req, res) => {
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists');
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) =>{res.status(201).json(user) })
+        .catch((error) => {
+          console.error(error);
+          res.status.apply(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status.apply(500).send('Error: ' + error);
+    });
+  });
 
 
-// READ
+// UPDATE (a user's info, by username)
+/* We’ll expect JSON in this format
+{
+  Username: String,
+  (required)
+  Password: String,
+  (required)
+  Email: String,
+  (required)
+  Birthday: Date
+}*/
+app.post('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, 
+    { $set:
+      {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+  },
+  { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if(err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
+
+
+// CREATE (add a movie to a user's list of favorites)
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
+    $push: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
+
+
+// DELETE (a movie from favorites list)
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username }, {
+    $pull: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true},
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });   
+});
+
+
+// DELETE (a user by usernme)
+app.delete('/users/:Username', (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(req.params.Username + ' was not found');
+      } else {
+        res.status(200).send(req.params.Username + ' was deleted.');
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+
+// READ (users, all)
+app.get('/users', (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// READ (user, by username)
+app.get('/users/:Username', (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+});
+
+// READ (movies, all)
 app.get('/movies', (req, res) => {
-  res.status(200).json(topMovies);
-})
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 
-// READ
-app.get('/movies/:title', (req, res) => {
-  const {title} = req.params;
-  const movie = topMovies.find( movie => movie.Title === title);
-
-  if(movie) {
-    res.status(200).json(movie);
-  } else {
-    res.status(400).send('no such movie')
-  }
-
-})
-
-
-// READ
-app.get('/movies/genre/:genreType', (req, res) => {
-  const {genreType} = req.params;
-  const genre = topMovies.find( movie => movie.Genre.Type === genreType).Genre;
-
-  if(genre) {
-    res.status(200).json(genre);
-  } else {
-    res.status(400).send('no such genre')
-  }
-
-})
+// READ (movie, by movie title)
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 
-// READ
-app.get('/movies/directors/:directorName', (req, res) => {
-  const {directorName} = req.params;
-  const director = topMovies.find( movie => movie.Director.Name === directorName).Director;
+// READ (specific genre and info)
+app.get('/genre/:Name', (req, res) => {
+  Genres.findOne({ Name: req.params.Name })
+    .then((genre) => {
+      res.json(genre.Description);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
-  if(director) {
-    res.status(200).json(director);
-  } else {
-    res.status(400).send('no such director')
-  }
 
-})
+// READ (specific director and info)
+app.get('/director/:Name', (req, res) => {
+  Directors.findOne({ Name: req.params.Name })
+    .then((director) => {
+      res.json(director);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 
 // ERROR  
