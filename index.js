@@ -1,19 +1,25 @@
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  uuid = require('uuid'),
+  morgan = require('morgan');
+
+
+const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
 
+
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
-
-const express = require('express'),
-  bodyParser = require('body-parser'),
-  uuid = require('uuid');
-
-const app = express();
+mongoose.set('strictQuery', true);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//require('./auth')(app);
+
 
 let users = [
   {
@@ -44,7 +50,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Adventure',
+        Name: 'Adventure',
         Description: 'The adventure genre consists of stories where the protagonist goes on an epic journey, either personally or geographically'
       },
       ImageURL: 'harry-potter-ss.png'
@@ -59,7 +65,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Fantasy',
+        Name: 'Fantasy',
         Description: 'Fantasy is a genre of speculative fiction involving magical elements, typically set in a fictional universe and sometimes inspired by mythology and folklore'
       },
       ImageURL: 'lort.png'
@@ -74,7 +80,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Romance',
+        Name: 'Romance',
         Description: 'a type of genre fiction which places its primary focus on the relationship and romantic love between two people, and usually has an "emotionally satisfying and optimistic ending.'
       },
       ImageURL: 'twilight.png'
@@ -89,7 +95,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Fantasy',
+        Name: 'Fantasy',
         Description: 'Fantasy is a genre of speculative fiction involving magical elements, typically set in a fictional universe and sometimes inspired by mythology and folklore'
       },
       ImageURL: 'fantastic-beasts-awtft.png'
@@ -104,7 +110,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Comedy',
+        Name: 'Comedy',
         Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.'
       },
       ImageURL: 'cars.png'
@@ -119,7 +125,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Adventure',
+        Name: 'Adventure',
         Description: 'The adventure genre consists of stories where the protagonist goes on an epic journey, either personally or geographically'
       },
       ImageURL: 'the-incredibles.png'
@@ -134,7 +140,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Adventure',
+        Name: 'Adventure',
         Description: 'The adventure genre consists of stories where the protagonist goes on an epic journey, either personally or geographically'
       },
       ImageURL: 'toy-story.png'
@@ -149,7 +155,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Comedy',
+        Name: 'Comedy',
         Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.'
       },
       ImageURL: 'legally-blonde.png'
@@ -164,7 +170,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Comedy',
+        Name: 'Comedy',
         Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.'
       },
       ImageURL: 'mean-girls.png'
@@ -179,7 +185,7 @@ let topMovies = [
         deathYear: ''
       },
       Genre: {
-        Type: 'Horror',
+        Name: 'Horror',
         Description: 'Horror is a genre of fiction which is intended to frighten, scare, or disgust'
       },
       ImageURL: 'scream2.png'
