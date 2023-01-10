@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //require('./auth')(app);
 
-
+/*
 let users = [
   {
     id: 1,
@@ -191,6 +191,7 @@ let topMovies = [
       ImageURL: 'scream2.png'
     }
   ];
+*/
 
 app.use(express.static("public"));
 
@@ -289,7 +290,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 
 // DELETE (a movie from favorites list)
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
-  Users.findOneAndRemove({ Username: req.params.Username }, {
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
     $pull: { FavoriteMovies: req.params.MovieID }
   },
   { new: true},
@@ -373,9 +374,9 @@ app.get('/movies/:Title', (req, res) => {
 
 // READ (specific genre and info)
 app.get('/genre/:Name', (req, res) => {
-  Genres.findOne({ Name: req.params.Name })
-    .then((genre) => {
-      res.json(genre.Description);
+  Movies.findOne({ 'Genre.Name': req.params.Name })
+    .then((movie) => {
+      res.json(movie.Genre);
     })
     .catch((err) => {
       console.error(err);
@@ -386,9 +387,9 @@ app.get('/genre/:Name', (req, res) => {
 
 // READ (specific director and info)
 app.get('/director/:Name', (req, res) => {
-  Directors.findOne({ Name: req.params.Name })
-    .then((director) => {
-      res.json(director);
+  Movies.findOne({ 'Director.Name': req.params.Name })
+    .then((movie) => {
+      res.json(movie.Director);
     })
     .catch((err) => {
       console.error(err);
