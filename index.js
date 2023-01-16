@@ -220,7 +220,7 @@ app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   Email: String,
   Birthday: Date
 }*/
-app.post('/users',  passport.authenticate('jwt', { session: false }), (req, res) => {
+app.post('/users',  passport.authenticate('jwt', { session: false }), 
   [
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -244,7 +244,7 @@ app.post('/users',  passport.authenticate('jwt', { session: false }), (req, res)
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
