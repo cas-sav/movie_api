@@ -206,9 +206,7 @@ app.use(express.static("public"));
 
 
 // default text response
-app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.send("Welcome to MyFlix!");
-});
+
 
 
 // CREATE (add a user)
