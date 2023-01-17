@@ -11,10 +11,10 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('strictQuery', true);
 
 app.use(bodyParser.json());
@@ -429,7 +429,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
   
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
