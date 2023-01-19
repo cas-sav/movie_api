@@ -11,10 +11,12 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+//mongoose.connect('mongodb+srv://cassiesav:Ko&88groupie!@cassies-clusters.ytyoxqr.mongodb.net/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-//mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('strictQuery', true);
 
 app.use(bodyParser.json());
@@ -221,7 +223,7 @@ app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   Email: String,
   Birthday: Date
 }*/
-app.post('/users',  passport.authenticate('jwt', { session: false }), 
+app.post('/users', 
   [
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
